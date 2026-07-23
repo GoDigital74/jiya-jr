@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://jiyajr.com"),
   title: {
-    default: "Jiya JR | Premium Collections & Craftsmanship",
+    default: "Jiya JR | Premium Awards, Trophies & Corporate Gifts",
     template: "%s | Jiya JR",
   },
   description:
-    "Discover Jiya JR's carefully curated premium collections, corporate gifts, trophies, and custom craftsmanship. Decades of trusted service delivering excellence across India.",
+    "Precision in every detail. Jiya JR crafts timeless symbols of achievement, offering premium custom recognition, corporate gifting, and school awards.",
   keywords: [
     "Jiya JR",
     "Corporate Gifts",
@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     "School Awards",
     "Custom Craftsmanship",
     "India",
+    "Corporate Gifts",
+    "Awards",
+    "school awards"
   ],
   authors: [{ name: "Jiya JR" }],
   creator: "Jiya JR",
@@ -34,9 +37,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: "https://jiyajr.com",
-    title: "Jiya JR | Premium Collections & Craftsmanship",
+    title: "Jiya JR | Premium Awards, Trophies & Corporate Gifts",
     description:
-      "Decades of craftsmanship, trusted service, and carefully curated awards and gifts.",
+      "Precision in every detail. Jiya JR crafts timeless symbols of achievement, offering premium custom recognition, corporate gifting, and school awards.",
     siteName: "Jiya JR",
     images: [
       {
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Jiya JR | Premium Collections",
-    description: "Decades of craftsmanship and trusted service across India.",
+    description: "Precision in every detail. Jiya JR crafts timeless symbols of achievement, offering premium custom recognition, corporate gifting, and school awards.",
     images: ["/icon.png"],
   },
   robots: {
