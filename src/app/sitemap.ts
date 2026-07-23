@@ -1,10 +1,9 @@
 import { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
 
-export default async function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://jiyajr.com";
 
-  
   // 1. Static Core Pages & Category Filters
   const staticRoutes: MetadataRoute.Sitemap = [
     {
