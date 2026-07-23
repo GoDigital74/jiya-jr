@@ -24,9 +24,9 @@ export const productType = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'School', value: 'School' },
-          { title: 'Business', value: 'Business' },
-          { title: 'Regular', value: 'Regular' },
+          { title: 'School Award', value: 'School Award' },
+          { title: 'Business Award', value: 'Business Award' },
+          { title: 'Regular Award', value: 'Regular Award' },
           { title: 'Gifts', value: 'Gifts' },
           { title: 'Sports Award', value: 'Sports Award' },
         ],

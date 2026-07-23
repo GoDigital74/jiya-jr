@@ -35,7 +35,7 @@ export default async function ShopPage() {
   }`);
 
   // 👇 FIX: Added "Gifts" to the predefined categories list
-  const predefinedCategories = ["School", "Business", "Regular", "Sports Award", "Gifts"];
+  const predefinedCategories = ["School Award", "Business Award", "Regular Award", "Sports Award", "Gifts"];
   const fetchedCategories = products.map((p) => p.category).filter(Boolean);
   const categories = Array.from(new Set([...predefinedCategories, ...fetchedCategories]));
 

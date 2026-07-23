@@ -9,13 +9,13 @@ const categoriesData = [
     src: '/award1.png', 
     alt: 'Corporate Gifting', 
     title: 'CORPORATE GIFTING', 
-    query: 'Business' 
+    query: 'Business Award' 
   },
   { 
     src: '/award2.png', 
     alt: 'School Awards', 
     title: 'SCHOOL AWARDS', 
-    query: 'School' 
+    query: 'School Award' 
   },
   { 
     src: '/award3.png', 

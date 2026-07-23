@@ -44,19 +44,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     // Category Pages
     {
-      url: `${baseUrl}/shop?category=School`,
+      url: `${baseUrl}/shop?category=School+Award`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/shop?category=Business`,
+      url: `${baseUrl}/shop?category=Business+Award`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/shop?category=Regular`,
+      url: `${baseUrl}/shop?category=Regular+Award`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
