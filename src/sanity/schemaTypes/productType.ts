@@ -27,7 +27,7 @@ export const productType = defineType({
           { title: 'School', value: 'School' },
           { title: 'Business', value: 'Business' },
           { title: 'Regular', value: 'Regular' },
-          { title: 'Gift', value: 'Gift' },
+          { title: 'Gifts', value: 'Gifts' },
           { title: 'Sports Award', value: 'Sports Award' },
         ],
       },
