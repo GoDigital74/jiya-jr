@@ -97,15 +97,15 @@ export default function SmartGiftFinder() {
             >
               {/* Left Red Section */}
               <div
-                className="w-full md:w-2/5 h-[300px] flex flex-col justify-center items-center text-center px-8 z-10"
+                className="w-full md:w-2/5 h-[120px] md:h-[300px] flex flex-col justify-center items-center text-center px-8 z-10"
                 style={{
                   background: "#FF0000", 
                   clipPath: "polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%)",
                 }}
               >
-                <p className="text-white text-2xl mb-1 font-medium">Still Confused?</p>
-                <p className="text-white text-lg mb-2">Try Our</p>
-                <h2 className="text-white text-4xl font-black font-serif tracking-wide drop-shadow-sm">
+                <p className="text-white text-xl md:text-2xl mb-1 font-medium">Still Confused?</p>
+                <p className="text-white text-xl md:text-lg mb-2">Try Our</p>
+                <h2 className="text-white text-xl md:text-3xl font-black font-serif tracking-wide drop-shadow-sm">
                   Smart Gift Finder
                 </h2>
               </div>
@@ -161,7 +161,7 @@ export default function SmartGiftFinder() {
                   <button 
                     type="submit"
                     disabled={isFormEmpty} // 👇 FIX: Disabled when empty
-                    className={`w-full font-bold text-lg py-3 rounded-full transition-all shadow-md 
+                    className={`w-full font-bold text-md py-3 rounded-full transition-all shadow-md 
                       ${isFormEmpty 
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed" // Disabled styles
                         : "bg-white text-gray-900 hover:bg-gray-50" // Active styles
