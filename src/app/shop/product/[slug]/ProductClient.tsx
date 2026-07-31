@@ -41,7 +41,6 @@
 //   },
 // };
 
-// // 👇 FIX: Add the exact same discount logic here so the product page matches the shop page
 // const getDiscountInfo = (id: string, currentPrice: number) => {
 //   if (!id || !currentPrice) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
 //   const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -71,7 +70,6 @@
 
 //   const productId = product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
 
-//   // 👇 Get discount data for this product
 //   const { hasDiscount, discountPercent, originalPrice } = getDiscountInfo(product._id, product.price);
 
 //   const sizeImages = ((product.sizes as any[]) || []).map((sizeObj) => sizeObj.imageUrl).filter(Boolean);
@@ -150,22 +148,24 @@
 //   return (
 //     <>
 //       <Header />
-//       <div className="bg-white min-h-screen pt-32 pb-20 font-sans">
+//       {/* 👇 FIX: Adjusted padding bottom (pb-12 instead of pb-20) to remove dead space */}
+//       <div className="bg-white min-h-screen pt-28 md:pt-32 pb-12 font-sans">
 //         <div className="container mx-auto px-4 lg:px-12 max-w-[1300px]">
-//           <div className="text-xs text-gray-400 mb-8 flex items-center gap-2 uppercase tracking-widest font-medium">
+//           <div className="text-xs text-gray-400 mb-6 md:mb-8 flex items-center gap-2 uppercase tracking-widest font-medium overflow-hidden whitespace-nowrap">
 //             <Link href="/" className="hover:text-[#D4AF37] transition">Home</Link>
 //             <span>/</span>
 //             <Link href="/shop" className="hover:text-[#D4AF37] transition">Shop</Link>
 //             <span>/</span>
-//             <Link href={`/shop?category=${product.category}`} className="hover:text-[#D4AF37] transition">{product.category}</Link>
+//             <Link href={`/shop?category=${product.category}`} className="hover:text-[#D4AF37] transition truncate">{product.category}</Link>
 //             <span>/</span>
-//             <span className="text-gray-900 truncate max-w-[200px]">{product.name}</span>
+//             <span className="text-gray-900 truncate max-w-[120px] md:max-w-[200px]">{product.name}</span>
 //           </div>
 
-//           <div className="flex flex-col lg:flex-row gap-12 xl:gap-16 mb-24 justify-center">
-//             <div className="w-full lg:w-[45%] max-w-lg mx-auto flex flex-col-reverse md:flex-row gap-4 md:gap-6 h-fit sticky top-32">
+//           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 mb-16 justify-center">
+//             <div className="w-full lg:w-[45%] max-w-lg mx-auto flex flex-col-reverse md:flex-row gap-4 md:gap-6 h-fit lg:sticky lg:top-32">
 //               {thumbnails.length > 1 && (
-//                 <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto md:w-20 custom-scrollbar pb-2 md:pb-0">
+//                 // 👇 FIX: Added [&::-webkit-scrollbar]:hidden and related classes for smooth, invisible scrolling on mobile
+//                 <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto md:w-20 pb-2 md:pb-0 w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 //                   {thumbnails.map((img, idx) => (
 //                     <button
 //                       key={idx}
@@ -180,20 +180,20 @@
 //                 </div>
 //               )}
 
-//               <div className="flex-1 bg-[#f8f8f8] rounded-2xl relative aspect-[4/5] max-h-[600px] overflow-hidden group border border-gray-100">
+//               <div className="flex-1 bg-[#f8f8f8] rounded-2xl relative aspect-square md:aspect-[4/5] max-h-[600px] overflow-hidden group border border-gray-100 w-full">
 //                 <Image
 //                   src={mainImage}
 //                   alt={product.name}
 //                   fill
 //                   priority
 //                   sizes="(max-width: 768px) 100vw, 50vw"
-//                   className="object-contain p-10 mix-blend-multiply transition-opacity duration-300"
+//                   className="object-contain p-6 md:p-10 mix-blend-multiply transition-opacity duration-300"
 //                 />
 //               </div>
 //             </div>
 
 //             <div className="w-full lg:w-[50%] flex flex-col">
-//               <div className="border-b border-gray-100 pb-6 mb-6">
+//               <div className="border-b border-gray-100 pb-5 md:pb-6 mb-5 md:mb-6">
 //                 <h2 className="text-[#D4AF37] text-xs font-bold tracking-[0.2em] uppercase mb-2">
 //                   {product.category}
 //                 </h2>
@@ -201,7 +201,6 @@
 //                   {product.name}
 //                 </h1>
 
-//                 {/* 👇 FIX: Show the discount logic on the main product details page */}
 //                 <div className="mt-4 flex items-center gap-3">
 //                   <span className="text-3xl font-bold text-gray-900">
 //                     ₹{product.price.toFixed(2)}
@@ -224,15 +223,15 @@
 
 //               {product.sizes && product.sizes.length > 0 && (
 //                 <div className="mb-6">
-//                   <div className="flex justify-between items-center mb-4">
+//                   <div className="flex justify-between items-center mb-3 md:mb-4">
 //                     <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">Select Size</span>
 //                   </div>
-//                   <div className="flex flex-wrap gap-3">
+//                   <div className="flex flex-wrap gap-2.5 md:gap-3">
 //                     {product.sizes.map((sizeObj: any) => (
 //                       <button
 //                         key={sizeObj.sizeName}
 //                         onClick={() => handleSizeSelect(sizeObj)}
-//                         className={`px-5 py-2.5 rounded-full flex items-center justify-center gap-1.5 transition-all border-2 ${
+//                         className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full flex items-center justify-center gap-1.5 transition-all border-2 ${
 //                           selectedSize === sizeObj.sizeName
 //                             ? "border-[#D4AF37] bg-yellow-50 text-[#D4AF37]"
 //                             : "border-gray-200 text-gray-700 hover:border-gray-400"
@@ -251,16 +250,16 @@
 //               )}
 
 //               {product.colors && product.colors.length > 0 && (
-//                 <div className="mb-8">
-//                   <div className="flex justify-between items-center mb-4">
+//                 <div className="mb-6 md:mb-8">
+//                   <div className="flex justify-between items-center mb-3 md:mb-4">
 //                     <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">Select Metal Type</span>
 //                   </div>
-//                   <div className="flex flex-wrap gap-3">
+//                   <div className="flex flex-wrap gap-2.5 md:gap-3">
 //                     {product.colors.map((colorObj: any) => (
 //                       <button
 //                         key={colorObj.colorName}
 //                         onClick={() => handleColorSelect(colorObj)}
-//                         className={`px-5 py-2.5 rounded-full flex items-center justify-center gap-1.5 transition-all border-2 ${
+//                         className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full flex items-center justify-center gap-1.5 transition-all border-2 ${
 //                           selectedColor === colorObj.colorName
 //                             ? "border-[#D4AF37] bg-yellow-50 text-[#D4AF37]"
 //                             : "border-gray-200 text-gray-700 hover:border-gray-400"
@@ -291,33 +290,34 @@
 //                 </div>
 //               </div>
 
-//               <div className="fixed bottom-0 left-0 w-full lg:static bg-white lg:bg-transparent p-4 lg:p-0 border-t lg:border-none border-gray-200 z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] lg:shadow-none flex gap-4 mb-8">
+//               {/* 👇 FIX: Completely removed the "fixed bottom-0" layout so it scrolls normally. Increased height to py-3.5 for better tapping */}
+//               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 w-full mt-2">
 //                 <button
 //                   onClick={handleWhatsAppBuy}
-//                   className="flex-1 bg-[#25D366] text-white h-11 rounded-xl text-sm font-bold uppercase tracking-widest hover:bg-[#1ebd5a] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+//                   className="w-full bg-[#25D366] text-white py-3.5 md:h-12 rounded-xl text-sm font-bold uppercase tracking-widest hover:bg-[#1ebd5a] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
 //                 >
-//                   <MessageCircle className="w-4 h-4" /> Buy on WhatsApp
+//                   <MessageCircle className="w-5 h-5" /> Buy on WhatsApp
 //                 </button>
 //                 <button
 //                   onClick={handleAddToCart}
-//                   className="flex-1 bg-gray-900 text-white h-11 rounded-xl text-sm font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+//                   className="w-full bg-gray-900 text-white py-3.5 md:h-12 rounded-xl text-sm font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
 //                 >
-//                   <ShoppingBag className="w-4 h-4" /> Add to Bag
+//                   <ShoppingBag className="w-5 h-5" /> Add to Bag
 //                 </button>
 //               </div>
 
-//               <div className="grid grid-cols-3 gap-2 mb-10 py-6 border-y border-gray-100">
+//               <div className="grid grid-cols-3 gap-2 mb-8 md:mb-10 py-5 md:py-6 border-y border-gray-100">
 //                 <div className="flex flex-col items-center text-center gap-2">
 //                   <ShieldCheck className="w-6 h-6 text-gray-600" />
-//                   <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">100% Original</span>
+//                   <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">100% Original</span>
 //                 </div>
 //                 <div className="flex flex-col items-center text-center gap-2">
 //                   <RefreshCw className="w-6 h-6 text-gray-600" />
-//                   <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Easy Returns</span>
+//                   <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">Easy Returns</span>
 //                 </div>
 //                 <div className="flex flex-col items-center text-center gap-2">
 //                   <Truck className="w-6 h-6 text-gray-600" />
-//                   <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Free Shipping</span>
+//                   <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">Free Shipping</span>
 //                 </div>
 //               </div>
 
@@ -499,7 +499,6 @@ export default function ProductClient({ product, categories }: ProductClientProp
   return (
     <>
       <Header />
-      {/* 👇 FIX: Adjusted padding bottom (pb-12 instead of pb-20) to remove dead space */}
       <div className="bg-white min-h-screen pt-28 md:pt-32 pb-12 font-sans">
         <div className="container mx-auto px-4 lg:px-12 max-w-[1300px]">
           <div className="text-xs text-gray-400 mb-6 md:mb-8 flex items-center gap-2 uppercase tracking-widest font-medium overflow-hidden whitespace-nowrap">
@@ -513,9 +512,9 @@ export default function ProductClient({ product, categories }: ProductClientProp
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 mb-16 justify-center">
-            <div className="w-full lg:w-[45%] max-w-lg mx-auto flex flex-col-reverse md:flex-row gap-4 md:gap-6 h-fit lg:sticky lg:top-32">
+            {/* 👇 FIX: Added pb-6, border-b, and border-gray-300 for mobile view. Removes it on lg view. */}
+            <div className="w-full lg:w-[45%] max-w-lg mx-auto flex flex-col-reverse md:flex-row gap-4 md:gap-6 h-fit lg:sticky lg:top-32 pb-6 border-b border-gray-300 lg:border-none lg:pb-0">
               {thumbnails.length > 1 && (
-                // 👇 FIX: Added [&::-webkit-scrollbar]:hidden and related classes for smooth, invisible scrolling on mobile
                 <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto md:w-20 pb-2 md:pb-0 w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                   {thumbnails.map((img, idx) => (
                     <button
@@ -544,7 +543,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
             </div>
 
             <div className="w-full lg:w-[50%] flex flex-col">
-              <div className="border-b border-gray-100 pb-5 md:pb-6 mb-5 md:mb-6">
+              <div className="border-b border-gray-300 pb-5 md:pb-6 mb-5 md:mb-6">
                 <h2 className="text-[#D4AF37] text-xs font-bold tracking-[0.2em] uppercase mb-2">
                   {product.category}
                 </h2>
@@ -585,7 +584,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
                         className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full flex items-center justify-center gap-1.5 transition-all border-2 ${
                           selectedSize === sizeObj.sizeName
                             ? "border-[#D4AF37] bg-yellow-50 text-[#D4AF37]"
-                            : "border-gray-200 text-gray-700 hover:border-gray-400"
+                            : "border-gray-300 text-gray-700 hover:border-gray-400"
                         }`}
                       >
                         <span className="text-sm font-bold">{sizeObj.sizeName}</span>
@@ -613,7 +612,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
                         className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full flex items-center justify-center gap-1.5 transition-all border-2 ${
                           selectedColor === colorObj.colorName
                             ? "border-[#D4AF37] bg-yellow-50 text-[#D4AF37]"
-                            : "border-gray-200 text-gray-700 hover:border-gray-400"
+                            : "border-gray-300 text-gray-700 hover:border-gray-400"
                         }`}
                       >
                         <span className="text-sm font-bold">{colorObj.colorName}</span>
@@ -630,7 +629,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
 
               <div className="mb-8 flex items-center gap-4">
                 <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">Quantity</span>
-                <div className="flex items-center border-2 border-gray-200 rounded-full overflow-hidden h-11 w-32">
+                <div className="flex items-center border-2 border-gray-300 rounded-full overflow-hidden h-11 w-32">
                   <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex-1 flex justify-center hover:bg-gray-50 text-gray-600">
                     <Minus className="w-4 h-4" />
                   </button>
@@ -641,7 +640,6 @@ export default function ProductClient({ product, categories }: ProductClientProp
                 </div>
               </div>
 
-              {/* 👇 FIX: Completely removed the "fixed bottom-0" layout so it scrolls normally. Increased height to py-3.5 for better tapping */}
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 w-full mt-2">
                 <button
                   onClick={handleWhatsAppBuy}
@@ -683,7 +681,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
                         : "Premium quality craftsmanship designed for the modern lifestyle. Detailed with precision."}
                     </p>
                   )}
-                  <ul className="list-disc pl-5 space-y-1 mt-4 border-t border-gray-100 pt-4">
+                  <ul className="list-disc pl-5 space-y-1 mt-4 border-t border-gray-300 pt-4">
                     <li>Product ID: {productId}</li>
                   </ul>
                 </Accordion>
