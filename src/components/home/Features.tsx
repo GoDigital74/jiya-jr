@@ -64,7 +64,7 @@ export default function Features() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{duration: 0.4 }}
                 className="relative bg-[#1c2127] border border-gray-700 rounded-xl p-8 pt-10 text-center hover:bg-[#23282f] transition-colors duration-300"
               >
                 {/* Floating Number Badge */}

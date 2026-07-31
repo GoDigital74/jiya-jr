@@ -74,7 +74,7 @@ export default function FeaturedProducts({
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ duration: 0.4 }}
               // 👇 FIX: Applied exact #F0F0F0 background color
               className="bg-[#F0F0F0] rounded-xl border border-gray-200 hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col h-full relative group p-4"
             >

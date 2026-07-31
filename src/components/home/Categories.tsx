@@ -38,7 +38,7 @@ export default function Categories() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.2 }}
+              transition={{duration: 0.4 }}
               className="w-full"
             >
               <Link href={`/shop?category=${encodeURIComponent(item.query)}`} className="group flex flex-col items-center w-full">
