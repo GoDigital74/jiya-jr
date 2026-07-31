@@ -40,22 +40,16 @@ export default function Features() {
           <p className="text-gray-400 text-xl font-bold tracking-[0.2em] uppercase mb-4">
             How to order
           </p>
-          <h2 className="text-3xl md:text-4xl font-medium text-gray-700 mb-4">
+          <h2 className="text-xl md:text-4xl font-medium text-gray-700 mb-4">
             Custom trophies, the <span className="text-[#fbbc04]">easy way</span>
           </h2>
-          <p className="text-gray-400 text-xs md:text-lg max-w-4xl mx-auto">
+          <p className="text-gray-600 text-xs md:text-lg max-w-4xl mx-auto">
             Four simple steps from your first WhatsApp to a trophy in your hand. Most orders ship in 5-7 days.
           </p>
         </div>
 
         {/* Carousel / Grid Area */}
         <div className="relative flex items-center">
-          
-          {/* Left Arrow
-          <button className="hidden md:flex absolute -left-4 lg:-left-12 w-10 h-10 rounded-full bg-[#15191e] border border-gray-800 items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 transition z-10 shadow-lg">
-            <ChevronLeft className="w-5 h-5" />
-          </button> */}
-
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full px-4">
             {steps.map((step, idx) => (

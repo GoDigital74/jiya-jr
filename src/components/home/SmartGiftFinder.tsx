@@ -34,7 +34,7 @@ export default function SmartGiftFinder() {
   const isFormEmpty = !giftType && !price;
 
   return (
-    <section className="py-16 w-full overflow-visible">
+    <section className="py-12 w-full overflow-visible">
       <div className="container mx-auto px-4 max-w-[1200px] relative min-h-[220px] flex items-center justify-center">
         
         <AnimatePresence mode="wait">
@@ -70,7 +70,7 @@ export default function SmartGiftFinder() {
               <div className="flex-1 text-center pl-4 sm:pl-32 md:pl-48 relative z-10">
                 <p className="text-white text-xl md:text-2xl mb-1 font-medium">Still Confused?</p>
                 <p className="text-white text-lg mb-2">Try Our</p>
-                <h2 className="text-white text-4xl md:text-5xl font-black font-serif tracking-wide drop-shadow-sm">
+                <h2 className="text-white text-xl md:text-4xl font-black font-serif tracking-wide drop-shadow-sm">
                   Smart Gift Finder
                 </h2>
               </div>

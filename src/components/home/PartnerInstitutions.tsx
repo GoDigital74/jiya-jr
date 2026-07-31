@@ -23,7 +23,7 @@ export default function PartnerInstitutions() {
           <p className="text-gray-500 text-sm font-bold tracking-[0.2em] uppercase mb-2">
             Our Academic Partners
           </p>
-          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-2">
+          <h2 className="text-xl md:text-3xl font-medium text-gray-900 mb-2">
             Proudly associated with <span className="text-[#fbbc04]">top institutions</span>
           </h2>
           <p className="text-gray-600 text-sm md:text-xl max-w-5xl mx-auto">
