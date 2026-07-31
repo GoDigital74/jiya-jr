@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 export default function PromoBanner() {
   return (
-    <section className="w-full bg-white py-2 lg:py-16 mt-8 md:mt-16">
-      <div className="container mx-auto px-4 lg:px-12 max-w-[1400px]">
+    <section className="w-full bg-white py-2 lg:py-14 mt-4 md:mt-14">
+      <div className="container mx-auto px-1 lg:px-12 max-w-[1450px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

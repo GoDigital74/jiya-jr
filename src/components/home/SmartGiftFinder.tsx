@@ -35,7 +35,7 @@ export default function SmartGiftFinder() {
 
   return (
     <section className="py-12 w-full overflow-visible">
-      <div className="container mx-auto px-4 max-w-[1200px] relative min-h-[220px] flex items-center justify-center">
+      <div className="container mx-auto px-4 max-w-[1200px] relative min-h-[120px] flex items-center justify-center">
         
         <AnimatePresence mode="wait">
           {!isOpen ? (
@@ -46,7 +46,7 @@ export default function SmartGiftFinder() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="relative w-full h-[200px] flex items-center justify-between drop-shadow-xl"
+              className="relative w-full h-[150px] md:h-[200px] flex items-center justify-between drop-shadow-xl"
             >
               <div 
                 className="absolute inset-0 z-0"
@@ -79,7 +79,7 @@ export default function SmartGiftFinder() {
               <div className="pr-8 md:pr-16 lg:pr-24 relative z-10">
                 <button
                   onClick={() => setIsOpen(true)}
-                  className="bg-white text-gray-900 px-6 py-3 md:px-8 rounded-md font-bold text-base md:text-lg hover:bg-gray-50 transition-colors shadow-md whitespace-nowrap"
+                  className="bg-white text-gray-900 px-2 py-1 md:px-8 rounded-md font-bold text-base md:text-lg hover:bg-gray-50 transition-colors shadow-md whitespace-nowrap"
                 >
                   Start Search
                 </button>

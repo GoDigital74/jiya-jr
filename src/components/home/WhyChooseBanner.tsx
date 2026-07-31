@@ -3,8 +3,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 export default function WhyChooseBanner() {
   return (
-    <section className="w-full bg-white py-12 lg:py-16">
-      <div className="container mx-auto px-4 lg:px-12 max-w-[1400px]">
+    <section className="w-full bg-white py-3 lg:py-14">
+      <div className="container mx-auto px-1 lg:px-12 max-w-[1450px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

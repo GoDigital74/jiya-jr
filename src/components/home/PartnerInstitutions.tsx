@@ -15,11 +15,11 @@ export default function PartnerInstitutions() {
   ];
 
   return (
-    <section className="bg-gray-50 py-24 border-t border-gray-100 font-sans">
+    <section className="bg-gray-50 py-10 md:py-24 border-t border-gray-100 font-sans">
       <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] text-center">
         
         {/* Header Content */}
-        <div className="mb-10">
+        <div className="mb-6 md:mb-10">
           <p className="text-gray-500 text-sm font-bold tracking-[0.2em] uppercase mb-2">
             Our Academic Partners
           </p>

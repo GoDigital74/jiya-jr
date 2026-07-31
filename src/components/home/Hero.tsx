@@ -6,7 +6,6 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className="relative h-[30vh] md:h-[80vh] overflow-hidden mt-[76px]">
-      
       <div
         className="absolute inset-0 bg-cover bg-[15%_center] md:bg-center"
         style={{ backgroundImage: "url('/banner 1.png')" }}
