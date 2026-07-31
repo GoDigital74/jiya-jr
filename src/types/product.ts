@@ -22,5 +22,5 @@ export interface Product {
   sizes?: SizeOption[];
   sku?: string;   
   colors?: ColorOption[];
-  
+  finishingType?: string;
 }
