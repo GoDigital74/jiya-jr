@@ -58,7 +58,7 @@ export default function FeaturedProducts({
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-8 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-[#1a202c] mb-2 tracking-wide">

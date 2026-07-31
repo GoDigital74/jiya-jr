@@ -19,14 +19,14 @@ export default function PartnerInstitutions() {
       <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] text-center">
         
         {/* Header Content */}
-        <div className="mb-16">
-          <p className="text-gray-500 text-xl font-bold tracking-[0.2em] uppercase mb-4">
+        <div className="mb-10">
+          <p className="text-gray-500 text-sm font-bold tracking-[0.2em] uppercase mb-2">
             Our Academic Partners
           </p>
-          <h2 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-2">
             Proudly associated with <span className="text-[#fbbc04]">top institutions</span>
           </h2>
-          <p className="text-gray-600 text-xl md:text-xl max-w-5xl mx-auto">
+          <p className="text-gray-600 text-sm md:text-xl max-w-5xl mx-auto">
             Delivering excellence and custom craftsmanship for schools, colleges, and academies across India.
           </p>
         </div>
