@@ -98,11 +98,11 @@ export default function FeaturedProducts({
                   
                   {/* Category and Product ID Container */}
                   <div className="flex justify-between items-center mb-1.5 gap-2">
-                    <span className="text-[10px] md:text-[11px] font-bold text-[#D4AF37] uppercase tracking-wider truncate">
+                    <span className="text-[10px] md:text-[11px] font-bold text-[#010101] uppercase tracking-wider truncate">
                       {product.category}
                     </span>
-                    <span className="text-[9px] md:text-[10px] text-gray-400 font-semibold tracking-wider whitespace-nowrap">
-                      ID: {product.sku || `JR-${product._id.substring(0, 5)}`}
+                    <span className="text-[9px] md:text-[13px] text-gray-900 font-semibold tracking-wider whitespace-nowrap">
+                      ID:{product.sku || `JR-${product._id.substring(0, 5)}`}
                     </span>
                   </div>
                   

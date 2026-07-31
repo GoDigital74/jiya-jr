@@ -61,7 +61,6 @@ export const productType = defineType({
               validation: (Rule) => Rule.required(),
             },
             {
-              // 👇 NEW: The exact physical dimension
               name: 'dimension',
               title: 'Exact Dimension',
               type: 'string',
@@ -84,8 +83,6 @@ export const productType = defineType({
         },
       ],
     }),
-
-// Replace your current 'colors' field with this:
     defineField({
       name: 'colors',
       title: 'Available Metal Types & Images',
@@ -102,7 +99,7 @@ export const productType = defineType({
                 list: [
                   { title: 'Gold', value: 'Gold' },
                   { title: 'Silver', value: 'Silver' },
-                  { title: 'Copper', value: 'Copper' }, // Capitalized Copper for consistency
+                  { title: 'Copper', value: 'Copper' }, 
                 ],
               },
               validation: (Rule) => Rule.required(),
@@ -132,7 +129,22 @@ export const productType = defineType({
       description: 'Select the Metal types available and optionally attach images.',
     }),
     
-    // Add this field inside your product.ts fields array:
+
+    defineField({
+      name: 'finishingType',
+      title: 'Finishing Type',
+      type: 'string',
+      initialValue: 'Metal', 
+      options: {
+        list: [
+          { title: 'Metal', value: 'Metal' },
+          { title: 'Wooden', value: 'Wooden' },
+        ],
+        layout: 'dropdown', 
+      },
+      description: 'Select whether the product has a Wooden or Metal finish.',
+    }),
+
     defineField({
       name: 'sku',
       title: 'SKU / Product ID',
@@ -147,4 +159,3 @@ export const productType = defineType({
     }),
   ],
 })
-
