@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, Lock, Truck, MessageCircle } from "lucide-react";
 import Image from "next/image";
 
 export default function Footer() {
-  const WHATSAPP_NUMBER = "9971509003";
+  const WHATSAPP_NUMBER = "919971509003";
 
   return (
     <footer className="bg-[#0f0f0f] text-gray-300 pt-16 pb-6 relative font-sans border-t border-gray-900">
@@ -63,7 +63,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4 text-sm">
               <Phone className="w-4 h-4 text-[#D4AF37]" />
               <a
-                href="tel:+919971509003"
+                href="tel:919971509003"
                 className="hover:text-[#D4AF37] transition"
               >
                 +91 9971509003
