@@ -371,6 +371,7 @@ import { Product } from "@/types/product";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { PortableText } from "@portabletext/react";
+import { getDiscountInfo, withFinalPrice } from "@/utils/discount";
 
 interface ProductClientProps {
   product: Product;
@@ -392,16 +393,6 @@ const ptComponents = {
   },
 };
 
-const getDiscountInfo = (id: string, currentPrice: number) => {
-  if (!id || !currentPrice) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
-  const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const hasDiscount = hash % 10 > 2; 
-  if (!hasDiscount) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
-  const discountPercent = 5 + (hash % 41); 
-  const originalPrice = currentPrice / (1 - (discountPercent / 100));
-  return { hasDiscount, discountPercent, originalPrice };
-};
-
 export default function ProductClient({ product, categories }: ProductClientProps) {
   if (!product) {
     return (
@@ -421,7 +412,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
 
   const productId = product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
 
-  const { hasDiscount, discountPercent, originalPrice } = getDiscountInfo(product._id, product.price);
+  const { hasDiscount, discountPercent, originalPrice, finalPrice } = getDiscountInfo(product.price, product.discountPercent);
 
   const sizeImages = ((product.sizes as any[]) || []).map((sizeObj) => sizeObj.imageUrl).filter(Boolean);
   const colorImages = ((product.colors as any[]) || []).map((colorObj) => colorObj.imageUrl).filter(Boolean);
@@ -460,7 +451,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addItem({ ...product, selectedSize, selectedColor } as any);
+      addItem({ ...withFinalPrice(product), selectedSize, selectedColor } as any);
     }
   };
 
@@ -553,7 +544,7 @@ export default function ProductClient({ product, categories }: ProductClientProp
 
                 <div className="mt-4 flex items-center gap-3">
                   <span className="text-3xl font-bold text-gray-900">
-                    ₹{product.price.toFixed(2)}
+                    ₹{finalPrice.toFixed(2)}
                   </span>
                   {hasDiscount && (
                     <>

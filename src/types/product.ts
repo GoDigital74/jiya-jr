@@ -15,6 +15,7 @@ export interface Product {
   slug: string;
   category: string;
   price: number;
+  discountPercent?: number;
   rating: number;
   imageUrl: string;
   galleryUrls?: string[];

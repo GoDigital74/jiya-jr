@@ -17,6 +17,7 @@ async function getProduct(slug: string) {
   "slug": slug.current,
   category,
   price,
+  discountPercent,
   rating,
   sku,
   "colors": colors[]{

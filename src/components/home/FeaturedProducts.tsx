@@ -7,6 +7,7 @@ import { Product } from "@/types/product";
 import { useCartStore } from "@/store/cartStore";
 import { ShoppingBag, MessageCircle } from "lucide-react";
 import { urlForImage } from "@/sanity/lib/image";
+import { getDiscountInfo, getFinalPrice, withFinalPrice } from "@/utils/discount";
 
 // 👇 SMART IMAGE HELPER
 const getDisplayImage = (product: Product) => {
@@ -35,9 +36,9 @@ export default function FeaturedProducts({
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = (e: React.MouseEvent, product: Product) => {
-    e.preventDefault(); 
+    e.preventDefault();
     e.stopPropagation();
-    addItem(product);
+    addItem(withFinalPrice(product));
   };
 
   const WHATSAPP_NUMBER = "919971509003";
@@ -49,7 +50,7 @@ export default function FeaturedProducts({
     const productId = product.sku || `JR-${product._id.substring(0, 5)}`;
     
     // Include Product ID in the WhatsApp message
-    const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, Price: ₹${product.price}). Is it available?`;
+    const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, Price: ₹${getFinalPrice(product).toFixed(2)}). Is it available?`;
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
       "_blank",
@@ -68,7 +69,11 @@ export default function FeaturedProducts({
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {products.map((product, idx) => (
+          {products.map((product, idx) => {
+            const { hasDiscount, discountPercent, originalPrice, finalPrice } =
+              getDiscountInfo(product.price, product.discountPercent);
+
+            return (
             <motion.div
               key={product._id}
               initial={{ opacity: 0, y: 20 }}
@@ -84,6 +89,12 @@ export default function FeaturedProducts({
               >
                 {/* Image Container */}
                 <div className="relative aspect-square w-full flex items-center justify-center mb-4">
+                  {hasDiscount && (
+                    <span className="absolute top-0 left-0 bg-[#DB4444] text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded-sm z-10 shadow-sm">
+                      {discountPercent}% OFF
+                    </span>
+                  )}
+
                   <Image
                     src={getDisplayImage(product)}
                     alt={product.name || "Product"}
@@ -124,9 +135,16 @@ export default function FeaturedProducts({
                         </div>
                         
                         {/* Price */}
-                        <span className="font-extrabold text-gray-900 text-[15px] md:text-[16px]">
-                          ₹{product.price.toFixed(2)}
-                        </span>
+                        <div className="flex items-center gap-1.5 md:gap-2">
+                          <span className="font-extrabold text-gray-900 text-[15px] md:text-[16px]">
+                            ₹{finalPrice.toFixed(2)}
+                          </span>
+                          {hasDiscount && (
+                            <span className="text-[10px] md:text-[12px] text-gray-400 line-through font-medium">
+                              ₹{originalPrice.toFixed(0)}
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       {/* Cart Button */}
@@ -154,7 +172,8 @@ export default function FeaturedProducts({
                 </div>
               </Link>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

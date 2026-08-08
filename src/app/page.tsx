@@ -20,6 +20,7 @@ async function getProducts(): Promise<Product[]> {
     "slug": slug.current,
     category,
     price,
+    discountPercent,
     rating,
     "imageUrl": image.asset->url,
     "galleryUrls": gallery[].asset->url,

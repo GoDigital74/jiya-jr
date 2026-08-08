@@ -35,9 +35,20 @@ export const productType = defineType({
     }),
     defineField({
       name: 'price',
-      title: 'Price (₹)',
+      title: 'Original Price (₹)',
       type: 'number',
+      description: 'The price before discount. Shown struck-through on the card when a discount is set.',
       validation: (Rule) => Rule.required().positive(),
+    }),
+    defineField({
+      name: 'discountPercent',
+      title: 'Discount (%)',
+      type: 'number',
+      description:
+        'Optional. Discount applied to the original price (e.g. 265 with 5 shows a "5% OFF" badge and a final price of ₹251.75). Leave empty or 0 to sell at the original price with no badge.',
+      initialValue: 0,
+      validation: (Rule) =>
+        Rule.min(0).max(90).integer().error('Discount must be a whole number between 0 and 90'),
     }),
     defineField({
       name: 'rating',

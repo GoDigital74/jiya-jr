@@ -18,6 +18,7 @@ import { Product } from "@/types/product";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { urlForImage } from "@/sanity/lib/image";
+import { getDiscountInfo, getFinalPrice, withFinalPrice } from "@/utils/discount";
 
 interface ShopClientProps {
   initialProducts: Product[];
@@ -44,20 +45,6 @@ const getDisplayImage = (product: Product) => {
   if (colorImages.length > 0) return colorImages[0];
 
   return "/placeholder.png";
-};
-
-const getDiscountInfo = (id: string, currentPrice: number) => {
-  if (!id || !currentPrice) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
-  
-  const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const hasDiscount = hash % 10 > 2; 
-  
-  if (!hasDiscount) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
-  
-  const discountPercent = 5 + (hash % 41); 
-  const originalPrice = currentPrice / (1 - (discountPercent / 100));
-  
-  return { hasDiscount, discountPercent, originalPrice };
 };
 
 export default function ShopClient({
@@ -90,14 +77,14 @@ export default function ShopClient({
       }
     }
     
-    if (p.price > priceRange) return false;
+    if (getFinalPrice(p) > priceRange) return false;
     return true;
   });
 
   if (sortOption === "Price (Low to High)") {
-    filteredProducts.sort((a, b) => a.price - b.price);
+    filteredProducts.sort((a, b) => getFinalPrice(a) - getFinalPrice(b));
   } else if (sortOption === "Price (High to Low)") {
-    filteredProducts.sort((a, b) => b.price - a.price);
+    filteredProducts.sort((a, b) => getFinalPrice(b) - getFinalPrice(a));
   }
 
   const handleCategoryToggle = (category: string) => {
@@ -117,7 +104,7 @@ export default function ShopClient({
     e.preventDefault();
     e.stopPropagation();
     const productId = product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
-    const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, Price: ₹${product.price}). Is it available?`;
+    const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, Price: ₹${getFinalPrice(product).toFixed(2)}). Is it available?`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
@@ -306,7 +293,7 @@ export default function ShopClient({
                   </div>
                 ) : (
                   filteredProducts.map((product, idx) => {
-                    const { hasDiscount, discountPercent, originalPrice } = getDiscountInfo(product._id, product.price);
+                    const { hasDiscount, discountPercent, originalPrice, finalPrice } = getDiscountInfo(product.price, product.discountPercent);
 
                     return (
                       <motion.div
@@ -360,7 +347,7 @@ export default function ShopClient({
                                   
                                   <div className="flex items-center gap-1.5 md:gap-2">
                                     <span className="font-extrabold text-gray-900 text-[15px] md:text-[16px]">
-                                      ₹{product.price.toFixed(2)}
+                                      ₹{finalPrice.toFixed(2)}
                                     </span>
                                     {hasDiscount && (
                                       <span className="text-[10px] md:text-[12px] text-gray-400 line-through font-medium">
@@ -374,7 +361,7 @@ export default function ShopClient({
                                   onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    addItem(product);
+                                    addItem(withFinalPrice(product));
                                   }}
                                   className="w-8 h-8 rounded-full bg-[#1f3d2f] text-white flex items-center justify-center hover:bg-[#152920] hover:scale-105 transition-all shadow-sm z-10 relative"
                                   title="Add to Cart"

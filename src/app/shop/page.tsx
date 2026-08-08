@@ -71,6 +71,7 @@ export default async function ShopPage() {
     category,
     finishingType,
     price,
+    discountPercent,
     rating,
     sku,
     "colors": colors[]{
