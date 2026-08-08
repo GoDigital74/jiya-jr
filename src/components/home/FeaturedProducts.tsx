@@ -7,7 +7,11 @@ import { Product } from "@/types/product";
 import { useCartStore } from "@/store/cartStore";
 import { ShoppingBag, MessageCircle } from "lucide-react";
 import { urlForImage } from "@/sanity/lib/image";
-import { getDiscountInfo, getFinalPrice, withFinalPrice } from "@/utils/discount";
+import {
+  getDiscountInfo,
+  getFinalPrice,
+  withFinalPrice,
+} from "@/utils/discount";
 
 // 👇 SMART IMAGE HELPER
 const getDisplayImage = (product: Product) => {
@@ -19,12 +23,16 @@ const getDisplayImage = (product: Product) => {
   if (product.galleryUrls && product.galleryUrls.length > 0) {
     return product.galleryUrls[0];
   }
-  const sizeImages = (product.sizes as any[] || []).map((s) => s.imageUrl).filter(Boolean);
+  const sizeImages = ((product.sizes as any[]) || [])
+    .map((s) => s.imageUrl)
+    .filter(Boolean);
   if (sizeImages.length > 0) return sizeImages[0];
-  
-  const colorImages = (product.colors as any[] || []).map((c) => c.imageUrl).filter(Boolean);
+
+  const colorImages = ((product.colors as any[]) || [])
+    .map((c) => c.imageUrl)
+    .filter(Boolean);
   if (colorImages.length > 0) return colorImages[0];
-  
+
   return "/placeholder.png";
 };
 
@@ -41,20 +49,20 @@ export default function FeaturedProducts({
     addItem(withFinalPrice(product));
   };
 
-  const WHATSAPP_NUMBER = "919971509003";
+  const WHATSAPP_NUMBER = "919313064631";
   const handleWhatsAppBuy = (e: React.MouseEvent, product: Product) => {
-    e.preventDefault(); 
+    e.preventDefault();
     e.stopPropagation();
-    
+
     // Calculate the Product ID using SKU or fallback ID
     const productId = product.sku || `JR-${product._id.substring(0, 5)}`;
-    
+
     // Include Product ID in the WhatsApp message
     const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, Price: ₹${getFinalPrice(product).toFixed(2)}). Is it available?`;
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
       "_blank",
-      "noopener,noreferrer"
+      "noopener,noreferrer",
     );
   };
 
@@ -74,104 +82,102 @@ export default function FeaturedProducts({
               getDiscountInfo(product.price, product.discountPercent);
 
             return (
-            <motion.div
-              key={product._id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              // 👇 FIX: Applied exact #F0F0F0 background color
-              className="bg-[#F0F0F0] rounded-xl border border-gray-200 hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col h-full relative group p-4"
-            >
-              <Link
-                href={`/shop/product/${product.slug || product._id}`}
-                className="flex-col flex flex-1"
+              <motion.div
+                key={product._id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                // 👇 FIX: Applied exact #F0F0F0 background color
+                className="bg-[#F0F0F0] rounded-xl border border-gray-200 hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col h-full relative group p-4"
               >
-                {/* Image Container */}
-                <div className="relative aspect-square w-full flex items-center justify-center mb-4">
-                  {hasDiscount && (
-                    <span className="absolute top-0 left-0 bg-[#DB4444] text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded-sm z-10 shadow-sm">
-                      {discountPercent}% OFF
-                    </span>
-                  )}
+                <Link
+                  href={`/shop/product/${product.slug || product._id}`}
+                  className="flex-col flex flex-1"
+                >
+                  {/* Image Container */}
+                  <div className="relative aspect-square w-full flex items-center justify-center mb-4">
+                    {hasDiscount && (
+                      <span className="absolute top-0 left-0 bg-[#DB4444] text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded-sm z-10 shadow-sm">
+                        {discountPercent}% OFF
+                      </span>
+                    )}
 
-                  <Image
-                    src={getDisplayImage(product)}
-                    alt={product.name || "Product"}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                    className="object-contain group-hover:scale-110 transition-transform duration-700 ease-in-out mix-blend-multiply" 
-                  />
-                </div>
-
-                {/* Text Content */}
-                <div className="flex flex-col flex-1">
-                  
-                  {/* Category and Product ID Container */}
-                  <div className="flex justify-between items-center mb-1.5 gap-2">
-                    <span className="text-[10px] md:text-[11px] font-bold text-[#010101] uppercase tracking-wider truncate">
-                      {product.category}
-                    </span>
-                    <span className="text-[9px] md:text-[13px] text-gray-900 font-semibold tracking-wider whitespace-nowrap">
-                      ID:{product.sku || `JR-${product._id.substring(0, 5)}`}
-                    </span>
+                    <Image
+                      src={getDisplayImage(product)}
+                      alt={product.name || "Product"}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                      className="object-contain group-hover:scale-110 transition-transform duration-700 ease-in-out mix-blend-multiply"
+                    />
                   </div>
-                  
-                  <h3 className="font-bold text-gray-900 text-sm mb-0 line-clamp-2 min-h-[40px] leading-snug transition-colors">
-                    {product.name}
-                  </h3>
 
-                  {/* Bottom Area */}
-                  <div className="mt-auto flex flex-col gap-3 pt-2">
-                    <div className="flex items-end justify-between">
-                      
-                      <div className="flex flex-col gap-1">
-                        {/* Rating Stars */}
-                        <div className="flex text-[#F5A623] text-[10px] md:text-[12px]">
-                          {"★".repeat(Math.round(product.rating || 5))}
-                          <span className="text-gray-300">
-                            {"★".repeat(5 - Math.round(product.rating || 5))}
-                          </span>
-                        </div>
-                        
-                        {/* Price */}
-                        <div className="flex items-center gap-1.5 md:gap-2">
-                          <span className="font-extrabold text-gray-900 text-[15px] md:text-[16px]">
-                            ₹{finalPrice.toFixed(2)}
-                          </span>
-                          {hasDiscount && (
-                            <span className="text-[10px] md:text-[12px] text-gray-400 line-through font-medium">
-                              ₹{originalPrice.toFixed(0)}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Cart Button */}
-                      <button
-                        onClick={(e) => handleAddToCart(e, product)}
-                        className="w-8 h-8 rounded-full bg-[#1f3d2f] text-white flex items-center justify-center hover:bg-[#152920] hover:scale-105 transition-all shadow-sm z-10 relative"
-                        title="Add to Cart"
-                      >
-                        <ShoppingBag className="w-4 h-4" strokeWidth={2} />
-                      </button>
+                  {/* Text Content */}
+                  <div className="flex flex-col flex-1">
+                    {/* Category and Product ID Container */}
+                    <div className="flex justify-between items-center mb-1.5 gap-2">
+                      <span className="text-[10px] md:text-[11px] font-bold text-[#010101] uppercase tracking-wider truncate">
+                        {product.category}
+                      </span>
+                      <span className="text-[9px] md:text-[13px] text-gray-900 font-semibold tracking-wider whitespace-nowrap">
+                        ID:{product.sku || `JR-${product._id.substring(0, 5)}`}
+                      </span>
                     </div>
 
-                    {/* WhatsApp Button */}
-                    <button
-                      onClick={(e) => handleWhatsAppBuy(e, product)}
-                      className="w-full bg-[#25D366] text-white text-[11px] md:text-[12px] font-bold py-2.5 rounded-md flex items-center justify-center gap-1.5 hover:bg-[#1ebd5a] transition duration-200 shadow-sm z-10 relative tracking-wide uppercase"
-                    >
-                      <MessageCircle
-                        className="w-4 h-4 fill-current"
-                        strokeWidth={2}
-                      />
-                      Buy on WhatsApp
-                    </button>
+                    <h3 className="font-bold text-gray-900 text-sm mb-0 line-clamp-2 min-h-[40px] leading-snug transition-colors">
+                      {product.name}
+                    </h3>
+
+                    {/* Bottom Area */}
+                    <div className="mt-auto flex flex-col gap-3 pt-2">
+                      <div className="flex items-end justify-between">
+                        <div className="flex flex-col gap-1">
+                          {/* Rating Stars */}
+                          <div className="flex text-[#F5A623] text-[10px] md:text-[12px]">
+                            {"★".repeat(Math.round(product.rating || 5))}
+                            <span className="text-gray-300">
+                              {"★".repeat(5 - Math.round(product.rating || 5))}
+                            </span>
+                          </div>
+
+                          {/* Price */}
+                          <div className="flex items-center gap-1.5 md:gap-2">
+                            <span className="font-extrabold text-gray-900 text-[15px] md:text-[16px]">
+                              ₹{finalPrice.toFixed(2)}
+                            </span>
+                            {hasDiscount && (
+                              <span className="text-[10px] md:text-[12px] text-gray-400 line-through font-medium">
+                                ₹{originalPrice.toFixed(0)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Cart Button */}
+                        <button
+                          onClick={(e) => handleAddToCart(e, product)}
+                          className="w-8 h-8 rounded-full bg-[#1f3d2f] text-white flex items-center justify-center hover:bg-[#152920] hover:scale-105 transition-all shadow-sm z-10 relative"
+                          title="Add to Cart"
+                        >
+                          <ShoppingBag className="w-4 h-4" strokeWidth={2} />
+                        </button>
+                      </div>
+
+                      {/* WhatsApp Button */}
+                      <button
+                        onClick={(e) => handleWhatsAppBuy(e, product)}
+                        className="w-full bg-[#25D366] text-white text-[11px] md:text-[12px] font-bold py-2.5 rounded-md flex items-center justify-center gap-1.5 hover:bg-[#1ebd5a] transition duration-200 shadow-sm z-10 relative tracking-wide uppercase"
+                      >
+                        <MessageCircle
+                          className="w-4 h-4 fill-current"
+                          strokeWidth={2}
+                        />
+                        Buy on WhatsApp
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
+                </Link>
+              </motion.div>
             );
           })}
         </div>

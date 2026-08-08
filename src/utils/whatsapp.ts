@@ -2,7 +2,7 @@ import { Product } from "../types/product";
 import { getFinalPrice } from "./discount";
 
 const WHATSAPP_PHONE_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919971509003";
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919313064631";
 
 export function getWhatsAppProductLink(product: Product) {
   const price = `₹${getFinalPrice(product).toFixed(2)}`;
@@ -25,6 +25,6 @@ I would like to order the following product.
 ${product.imageUrl}
 `;
   return `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodeURIComponent(
-    message.trim()
+    message.trim(),
   )}`;
 }

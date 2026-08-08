@@ -44,9 +44,9 @@
 // const getDiscountInfo = (id: string, currentPrice: number) => {
 //   if (!id || !currentPrice) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
 //   const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-//   const hasDiscount = hash % 10 > 2; 
+//   const hasDiscount = hash % 10 > 2;
 //   if (!hasDiscount) return { hasDiscount: false, discountPercent: 0, originalPrice: currentPrice };
-//   const discountPercent = 5 + (hash % 41); 
+//   const discountPercent = 5 + (hash % 41);
 //   const originalPrice = currentPrice / (1 - (discountPercent / 100));
 //   return { hasDiscount, discountPercent, originalPrice };
 // };
@@ -113,7 +113,7 @@
 //     }
 //   };
 
-//   const WHATSAPP_NUMBER = "919971509003";
+//   const WHATSAPP_NUMBER = "919313064631";
 //   const handleWhatsAppBuy = () => {
 //     const sizeText = selectedSize ? `Size: ${selectedSize}, ` : "";
 //     const colorText = selectedColor ? `Metal: ${selectedColor}, ` : "";
@@ -380,20 +380,39 @@ interface ProductClientProps {
 
 const ptComponents = {
   block: {
-    h3: ({ children }: any) => <h3 className="text-lg font-bold text-gray-900 mt-4 mb-2">{children}</h3>,
-    h4: ({ children }: any) => <h4 className="text-md font-bold text-gray-900 mt-4 mb-2">{children}</h4>,
-    normal: ({ children }: any) => <p className="mb-2 text-gray-600">{children}</p>,
+    h3: ({ children }: any) => (
+      <h3 className="text-lg font-bold text-gray-900 mt-4 mb-2">{children}</h3>
+    ),
+    h4: ({ children }: any) => (
+      <h4 className="text-md font-bold text-gray-900 mt-4 mb-2">{children}</h4>
+    ),
+    normal: ({ children }: any) => (
+      <p className="mb-2 text-gray-600">{children}</p>
+    ),
   },
   list: {
-    bullet: ({ children }: any) => <ul className="list-disc pl-5 space-y-1 mb-4 text-gray-600">{children}</ul>,
-    number: ({ children }: any) => <ol className="list-decimal pl-5 space-y-1 mb-4 text-gray-600">{children}</ol>,
+    bullet: ({ children }: any) => (
+      <ul className="list-disc pl-5 space-y-1 mb-4 text-gray-600">
+        {children}
+      </ul>
+    ),
+    number: ({ children }: any) => (
+      <ol className="list-decimal pl-5 space-y-1 mb-4 text-gray-600">
+        {children}
+      </ol>
+    ),
   },
   marks: {
-    strong: ({ children }: any) => <strong className="font-bold text-gray-900">{children}</strong>,
+    strong: ({ children }: any) => (
+      <strong className="font-bold text-gray-900">{children}</strong>
+    ),
   },
 };
 
-export default function ProductClient({ product, categories }: ProductClientProps) {
+export default function ProductClient({
+  product,
+  categories,
+}: ProductClientProps) {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center font-sans bg-white pt-32">
@@ -405,17 +424,27 @@ export default function ProductClient({ product, categories }: ProductClientProp
 
   const addItem = useCartStore((state) => state.addItem);
 
-  const [selectedSize, setSelectedSize] = useState((product.sizes as any[])?.[0]?.sizeName || "");
-  const [selectedColor, setSelectedColor] = useState((product.colors as any[])?.[0]?.colorName || "");
+  const [selectedSize, setSelectedSize] = useState(
+    (product.sizes as any[])?.[0]?.sizeName || "",
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    (product.colors as any[])?.[0]?.colorName || "",
+  );
   const [activeTab, setActiveTab] = useState("details");
   const [quantity, setQuantity] = useState(1);
 
-  const productId = product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
+  const productId =
+    product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
 
-  const { hasDiscount, discountPercent, originalPrice, finalPrice } = getDiscountInfo(product.price, product.discountPercent);
+  const { hasDiscount, discountPercent, originalPrice, finalPrice } =
+    getDiscountInfo(product.price, product.discountPercent);
 
-  const sizeImages = ((product.sizes as any[]) || []).map((sizeObj) => sizeObj.imageUrl).filter(Boolean);
-  const colorImages = ((product.colors as any[]) || []).map((colorObj) => colorObj.imageUrl).filter(Boolean);
+  const sizeImages = ((product.sizes as any[]) || [])
+    .map((sizeObj) => sizeObj.imageUrl)
+    .filter(Boolean);
+  const colorImages = ((product.colors as any[]) || [])
+    .map((colorObj) => colorObj.imageUrl)
+    .filter(Boolean);
 
   const allThumbnails = [
     product.imageUrl,
@@ -443,34 +472,55 @@ export default function ProductClient({ product, categories }: ProductClientProp
 
   const handleThumbnailClick = (imgUrl: string) => {
     setMainImage(imgUrl);
-    const matchedSize = (product.sizes as any[])?.find((s) => s.imageUrl === imgUrl);
+    const matchedSize = (product.sizes as any[])?.find(
+      (s) => s.imageUrl === imgUrl,
+    );
     if (matchedSize) setSelectedSize(matchedSize.sizeName);
-    const matchedColor = (product.colors as any[])?.find((c) => c.imageUrl === imgUrl);
+    const matchedColor = (product.colors as any[])?.find(
+      (c) => c.imageUrl === imgUrl,
+    );
     if (matchedColor) setSelectedColor(matchedColor.colorName);
   };
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addItem({ ...withFinalPrice(product), selectedSize, selectedColor } as any);
+      addItem({
+        ...withFinalPrice(product),
+        selectedSize,
+        selectedColor,
+      } as any);
     }
   };
 
-  const WHATSAPP_NUMBER = "919971509003";
+  const WHATSAPP_NUMBER = "919313064631";
   const handleWhatsAppBuy = () => {
     const sizeText = selectedSize ? `Size: ${selectedSize}, ` : "";
     const colorText = selectedColor ? `Metal: ${selectedColor}, ` : "";
     const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, ${sizeText}${colorText}Qty: ${quantity}). Is it available?`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
   };
 
-  const Accordion = ({ title, id, children }: { title: string; id: string; children: React.ReactNode }) => (
+  const Accordion = ({
+    title,
+    id,
+    children,
+  }: {
+    title: string;
+    id: string;
+    children: React.ReactNode;
+  }) => (
     <div className="border-b border-gray-200 py-4">
       <button
         onClick={() => setActiveTab(activeTab === id ? "" : id)}
         className="flex justify-between items-center w-full text-left font-bold text-gray-900 uppercase tracking-wider text-sm"
       >
         {title}
-        <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${activeTab === id ? "rotate-180" : ""}`} />
+        <ChevronDown
+          className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${activeTab === id ? "rotate-180" : ""}`}
+        />
       </button>
       <AnimatePresence>
         {activeTab === id && (
@@ -480,7 +530,9 @@ export default function ProductClient({ product, categories }: ProductClientProp
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="pt-4 text-sm text-gray-600 leading-relaxed">{children}</div>
+            <div className="pt-4 text-sm text-gray-600 leading-relaxed">
+              {children}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -493,13 +545,24 @@ export default function ProductClient({ product, categories }: ProductClientProp
       <div className="bg-white min-h-screen pt-28 md:pt-32 pb-12 font-sans">
         <div className="container mx-auto px-4 lg:px-12 max-w-[1300px]">
           <div className="text-xs text-gray-400 mb-6 md:mb-8 flex items-center gap-2 uppercase tracking-widest font-medium overflow-hidden whitespace-nowrap">
-            <Link href="/" className="hover:text-[#D4AF37] transition">Home</Link>
+            <Link href="/" className="hover:text-[#D4AF37] transition">
+              Home
+            </Link>
             <span>/</span>
-            <Link href="/shop" className="hover:text-[#D4AF37] transition">Shop</Link>
+            <Link href="/shop" className="hover:text-[#D4AF37] transition">
+              Shop
+            </Link>
             <span>/</span>
-            <Link href={`/shop?category=${product.category}`} className="hover:text-[#D4AF37] transition truncate">{product.category}</Link>
+            <Link
+              href={`/shop?category=${product.category}`}
+              className="hover:text-[#D4AF37] transition truncate"
+            >
+              {product.category}
+            </Link>
             <span>/</span>
-            <span className="text-gray-900 truncate max-w-[120px] md:max-w-[200px]">{product.name}</span>
+            <span className="text-gray-900 truncate max-w-[120px] md:max-w-[200px]">
+              {product.name}
+            </span>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 mb-16 justify-center">
@@ -512,10 +575,17 @@ export default function ProductClient({ product, categories }: ProductClientProp
                       key={idx}
                       onClick={() => handleThumbnailClick(img)}
                       className={`relative w-16 h-20 md:w-full md:h-24 flex-shrink-0 bg-[#f8f8f8] rounded-lg overflow-hidden border-2 transition-all ${
-                        mainImage === img ? "border-[#D4AF37] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
+                        mainImage === img
+                          ? "border-[#D4AF37] opacity-100"
+                          : "border-transparent opacity-60 hover:opacity-100"
                       }`}
                     >
-                      <Image src={img} alt={`Thumbnail ${idx + 1}`} fill className="object-contain p-2 mix-blend-multiply" />
+                      <Image
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        fill
+                        className="object-contain p-2 mix-blend-multiply"
+                      />
                     </button>
                   ))}
                 </div>
@@ -565,7 +635,9 @@ export default function ProductClient({ product, categories }: ProductClientProp
               {product.sizes && product.sizes.length > 0 && (
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-3 md:mb-4">
-                    <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">Select Size</span>
+                    <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">
+                      Select Size
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-2.5 md:gap-3">
                     {product.sizes.map((sizeObj: any) => (
@@ -578,9 +650,13 @@ export default function ProductClient({ product, categories }: ProductClientProp
                             : "border-gray-300 text-gray-700 hover:border-gray-400"
                         }`}
                       >
-                        <span className="text-sm font-bold">{sizeObj.sizeName}</span>
+                        <span className="text-sm font-bold">
+                          {sizeObj.sizeName}
+                        </span>
                         {sizeObj.dimension && (
-                          <span className={`text-xs font-medium whitespace-nowrap ${selectedSize === sizeObj.sizeName ? "text-[#D4AF37]" : "text-gray-500"}`}>
+                          <span
+                            className={`text-xs font-medium whitespace-nowrap ${selectedSize === sizeObj.sizeName ? "text-[#D4AF37]" : "text-gray-500"}`}
+                          >
                             | {sizeObj.dimension}
                           </span>
                         )}
@@ -593,7 +669,9 @@ export default function ProductClient({ product, categories }: ProductClientProp
               {product.colors && product.colors.length > 0 && (
                 <div className="mb-6 md:mb-8">
                   <div className="flex justify-between items-center mb-3 md:mb-4">
-                    <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">Select Metal Type</span>
+                    <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">
+                      Select Metal Type
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-2.5 md:gap-3">
                     {product.colors.map((colorObj: any) => (
@@ -606,9 +684,13 @@ export default function ProductClient({ product, categories }: ProductClientProp
                             : "border-gray-300 text-gray-700 hover:border-gray-400"
                         }`}
                       >
-                        <span className="text-sm font-bold">{colorObj.colorName}</span>
+                        <span className="text-sm font-bold">
+                          {colorObj.colorName}
+                        </span>
                         {colorObj.dimension && (
-                          <span className={`text-xs font-medium whitespace-nowrap ${selectedColor === colorObj.colorName ? "text-[#D4AF37]" : "text-gray-500"}`}>
+                          <span
+                            className={`text-xs font-medium whitespace-nowrap ${selectedColor === colorObj.colorName ? "text-[#D4AF37]" : "text-gray-500"}`}
+                          >
                             | {colorObj.dimension}
                           </span>
                         )}
@@ -619,13 +701,23 @@ export default function ProductClient({ product, categories }: ProductClientProp
               )}
 
               <div className="mb-8 flex items-center gap-4">
-                <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">Quantity</span>
+                <span className="text-sm font-bold text-gray-900 uppercase tracking-wider">
+                  Quantity
+                </span>
                 <div className="flex items-center border-2 border-gray-300 rounded-full overflow-hidden h-11 w-32">
-                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="flex-1 flex justify-center hover:bg-gray-50 text-gray-600">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="flex-1 flex justify-center hover:bg-gray-50 text-gray-600"
+                  >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-10 text-center font-bold text-gray-900">{quantity}</span>
-                  <button onClick={() => setQuantity(quantity + 1)} className="flex-1 flex justify-center hover:bg-gray-50 text-gray-600">
+                  <span className="w-10 text-center font-bold text-gray-900">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="flex-1 flex justify-center hover:bg-gray-50 text-gray-600"
+                  >
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
@@ -649,22 +741,31 @@ export default function ProductClient({ product, categories }: ProductClientProp
               <div className="grid grid-cols-3 gap-2 mb-8 md:mb-10 py-5 md:py-6 border-y border-gray-100">
                 <div className="flex flex-col items-center text-center gap-2">
                   <ShieldCheck className="w-6 h-6 text-gray-600" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">100% Original</span>
+                  <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                    100% Original
+                  </span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
                   <RefreshCw className="w-6 h-6 text-gray-600" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">Easy Returns</span>
+                  <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                    Easy Returns
+                  </span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
                   <Truck className="w-6 h-6 text-gray-600" />
-                  <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">Free Shipping</span>
+                  <span className="text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                    Free Shipping
+                  </span>
                 </div>
               </div>
 
               <div className="flex flex-col">
                 <Accordion title="Product Details" id="details">
                   {product.description && Array.isArray(product.description) ? (
-                    <PortableText value={product.description} components={ptComponents} />
+                    <PortableText
+                      value={product.description}
+                      components={ptComponents}
+                    />
                   ) : (
                     <p className="mb-3">
                       {typeof product.description === "string"
@@ -677,7 +778,10 @@ export default function ProductClient({ product, categories }: ProductClientProp
                   </ul>
                 </Accordion>
                 <Accordion title="Shipping & Returns" id="shipping">
-                  Dispatched within 24-48 hours. Standard delivery takes 3-7 business days across India. Please note that as per our policy, returns are not accepted unless the product is damaged upon arrival.
+                  Dispatched within 24-48 hours. Standard delivery takes 3-7
+                  business days across India. Please note that as per our
+                  policy, returns are not accepted unless the product is damaged
+                  upon arrival.
                 </Accordion>
               </div>
             </div>

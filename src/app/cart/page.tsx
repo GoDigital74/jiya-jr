@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { 
-  Trash2, 
-  ShoppingBag, 
-  MessageCircle, 
-  ArrowLeft, 
-  ShieldCheck 
+import {
+  Trash2,
+  ShoppingBag,
+  MessageCircle,
+  ArrowLeft,
+  ShieldCheck,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { urlForImage } from "@/sanity/lib/image";
@@ -22,15 +22,20 @@ const getDisplayImage = (item: any) => {
       ? item.imageUrl
       : urlForImage(item.imageUrl).url();
   }
-  if (item.galleryUrls && item.galleryUrls.length > 0) return item.galleryUrls[0];
-  
-  const sizeImages = (item.sizes || []).map((s: any) => s.imageUrl).filter(Boolean);
+  if (item.galleryUrls && item.galleryUrls.length > 0)
+    return item.galleryUrls[0];
+
+  const sizeImages = (item.sizes || [])
+    .map((s: any) => s.imageUrl)
+    .filter(Boolean);
   if (sizeImages.length > 0) return sizeImages[0];
-  
-  const colorImages = (item.colors || []).map((c: any) => c.imageUrl).filter(Boolean);
+
+  const colorImages = (item.colors || [])
+    .map((c: any) => c.imageUrl)
+    .filter(Boolean);
   if (colorImages.length > 0) return colorImages[0];
-  
-  return "/placeholder.png"; 
+
+  return "/placeholder.png";
 };
 
 export default function CartPage() {
@@ -42,21 +47,28 @@ export default function CartPage() {
   }, []);
 
   // Calculate overall totals
-  const cartCount = items.reduce((total, item) => total + (item.quantity || 1), 0);
-  const calculatedTotal = items.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
+  const cartCount = items.reduce(
+    (total, item) => total + (item.quantity || 1),
+    0,
+  );
+  const calculatedTotal = items.reduce(
+    (total, item) => total + item.price * (item.quantity || 1),
+    0,
+  );
 
   // WhatsApp Checkout Handler
   const handleWhatsAppCheckout = () => {
-    const WHATSAPP_NUMBER = "919971509003"; // As used in your Shop & Featured Products
-    
+    const WHATSAPP_NUMBER = "919313064631"; // As used in your Shop & Featured Products
+
     // Constructing the order message
-    let message = "Hello! I would like to place an order for the following items:%0A%0A";
-    
+    let message =
+      "Hello! I would like to place an order for the following items:%0A%0A";
+
     items.forEach((item, index) => {
       const productId = item.sku || `JR-${item._id.substring(0, 5)}`;
       const itemQty = item.quantity || 1;
       const itemTotal = item.price * itemQty;
-      
+
       message += `*${index + 1}. ${item.name}*%0A`;
       message += `- ID: ${productId}%0A`;
       message += `- Quantity: ${itemQty}%0A`;
@@ -69,7 +81,7 @@ export default function CartPage() {
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
       "_blank",
-      "noopener,noreferrer"
+      "noopener,noreferrer",
     );
   };
 
@@ -81,7 +93,6 @@ export default function CartPage() {
       <Header />
       <div className="bg-gray-50 min-h-screen pt-32 pb-20 font-sans">
         <div className="container mx-auto px-4 md:px-8 max-w-7xl">
-          
           {/* Page Title */}
           <div className="mb-8 flex items-center justify-between">
             <div>
@@ -89,11 +100,12 @@ export default function CartPage() {
                 Your Shopping Cart
               </h1>
               <p className="text-gray-500">
-                You have {cartCount} item{cartCount !== 1 ? 's' : ''} in your cart.
+                You have {cartCount} item{cartCount !== 1 ? "s" : ""} in your
+                cart.
               </p>
             </div>
-            <Link 
-              href="/shop" 
+            <Link
+              href="/shop"
               className="hidden md:flex items-center gap-2 text-sm font-bold text-[#D4AF37] hover:text-[#b08d24] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" /> Continue Shopping
@@ -106,12 +118,15 @@ export default function CartPage() {
               <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                 <ShoppingBag className="w-12 h-12 text-gray-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Your cart is completely empty</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                Your cart is completely empty
+              </h2>
               <p className="text-gray-500 max-w-md mx-auto mb-8">
-                Looks like you haven't added anything to your cart yet. Explore our premium collections to find exactly what you need.
+                Looks like you haven't added anything to your cart yet. Explore
+                our premium collections to find exactly what you need.
               </p>
-              <Link 
-                href="/shop" 
+              <Link
+                href="/shop"
                 className="bg-[#D4AF37] text-white px-8 py-3.5 rounded-lg font-bold tracking-widest uppercase text-sm hover:bg-[#b08d24] transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2"
               >
                 <ShoppingBag className="w-4 h-4" /> Start Shopping
@@ -120,24 +135,32 @@ export default function CartPage() {
           ) : (
             // FILLED CART STATE
             <div className="flex flex-col lg:flex-row gap-8">
-              
               {/* Left Side: Cart Items List */}
               <div className="flex-1">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                  
                   {/* Table Header (Desktop only) */}
                   <div className="hidden md:grid grid-cols-12 gap-4 p-6 border-b border-gray-100 bg-gray-50/50">
-                    <div className="col-span-6 text-xs font-bold text-gray-500 uppercase tracking-wider">Product</div>
-                    <div className="col-span-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Price</div>
-                    <div className="col-span-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Quantity</div>
-                    <div className="col-span-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Total</div>
+                    <div className="col-span-6 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Product
+                    </div>
+                    <div className="col-span-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">
+                      Price
+                    </div>
+                    <div className="col-span-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">
+                      Quantity
+                    </div>
+                    <div className="col-span-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">
+                      Total
+                    </div>
                   </div>
 
                   {/* Product Rows */}
                   <div className="divide-y divide-gray-100">
                     {items.map((item) => (
-                      <div key={item._id} className="p-6 flex flex-col md:grid md:grid-cols-12 gap-6 items-center relative group">
-                        
+                      <div
+                        key={item._id}
+                        className="p-6 flex flex-col md:grid md:grid-cols-12 gap-6 items-center relative group"
+                      >
                         {/* Mobile Remove Button (Absolute top right) */}
                         <button
                           onClick={() => removeItem(item._id)}
@@ -174,7 +197,9 @@ export default function CartPage() {
                         <div className="flex w-full md:hidden justify-between items-center pt-4 border-t border-gray-50 mt-2">
                           <div className="flex items-center gap-2">
                             <span className="text-sm text-gray-500">Qty:</span>
-                            <span className="font-bold">{item.quantity || 1}</span>
+                            <span className="font-bold">
+                              {item.quantity || 1}
+                            </span>
                           </div>
                           <div className="font-bold text-gray-900">
                             ₹{(item.price * (item.quantity || 1)).toFixed(2)}
@@ -206,15 +231,14 @@ export default function CartPage() {
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
-                        
                       </div>
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Mobile Continue Shopping */}
-                <Link 
-                  href="/shop" 
+                <Link
+                  href="/shop"
                   className="md:hidden mt-6 flex items-center justify-center gap-2 text-sm font-bold text-[#D4AF37] hover:text-[#b08d24] transition-colors py-3"
                 >
                   <ArrowLeft className="w-4 h-4" /> Continue Shopping
@@ -231,21 +255,29 @@ export default function CartPage() {
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-gray-600">
                       <span>Subtotal ({cartCount} items)</span>
-                      <span className="font-semibold text-gray-900">₹{calculatedTotal.toFixed(2)}</span>
+                      <span className="font-semibold text-gray-900">
+                        ₹{calculatedTotal.toFixed(2)}
+                      </span>
                     </div>
                     <div className="flex justify-between text-gray-600">
                       <span>Shipping</span>
-                      <span className="text-sm italic text-gray-400">Calculated on WhatsApp</span>
+                      <span className="text-sm italic text-gray-400">
+                        Calculated on WhatsApp
+                      </span>
                     </div>
                     <div className="flex justify-between text-gray-600">
                       <span>Taxes</span>
-                      <span className="text-sm italic text-gray-400">Calculated on WhatsApp</span>
+                      <span className="text-sm italic text-gray-400">
+                        Calculated on WhatsApp
+                      </span>
                     </div>
                   </div>
 
                   <div className="border-t border-gray-100 pt-6 mb-8">
                     <div className="flex justify-between items-end">
-                      <span className="text-base font-bold text-gray-900 uppercase tracking-wider">Total</span>
+                      <span className="text-base font-bold text-gray-900 uppercase tracking-wider">
+                        Total
+                      </span>
                       <div className="text-right">
                         <span className="text-2xl font-extrabold text-[#D4AF37]">
                           ₹{calculatedTotal.toFixed(2)}
@@ -261,19 +293,23 @@ export default function CartPage() {
                     onClick={handleWhatsAppCheckout}
                     className="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold tracking-wide text-sm hover:bg-[#1ebd5a] hover:-translate-y-0.5 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2.5 uppercase"
                   >
-                    <MessageCircle className="w-5 h-5 fill-current" strokeWidth={2} />
+                    <MessageCircle
+                      className="w-5 h-5 fill-current"
+                      strokeWidth={2}
+                    />
                     Checkout on WhatsApp
                   </button>
 
                   <div className="mt-6 flex items-start gap-3 bg-green-50/50 p-4 rounded-xl border border-green-100">
                     <ShieldCheck className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <p className="text-xs text-green-800 leading-relaxed">
-                      By clicking checkout, you will be securely redirected to WhatsApp to finalize your order details, shipping, and payment directly with our team.
+                      By clicking checkout, you will be securely redirected to
+                      WhatsApp to finalize your order details, shipping, and
+                      payment directly with our team.
                     </p>
                   </div>
                 </div>
               </div>
-
             </div>
           )}
         </div>

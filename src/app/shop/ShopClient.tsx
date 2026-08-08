@@ -18,7 +18,11 @@ import { Product } from "@/types/product";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { urlForImage } from "@/sanity/lib/image";
-import { getDiscountInfo, getFinalPrice, withFinalPrice } from "@/utils/discount";
+import {
+  getDiscountInfo,
+  getFinalPrice,
+  withFinalPrice,
+} from "@/utils/discount";
 
 interface ShopClientProps {
   initialProducts: Product[];
@@ -53,13 +57,15 @@ export default function ShopClient({
 }: ShopClientProps) {
   const searchParams = useSearchParams();
   const urlCategory = searchParams.get("category");
-  
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     urlCategory ? [urlCategory] : [],
   );
-  
-  const [selectedFinishingTypes, setSelectedFinishingTypes] = useState<string[]>([]);
-  
+
+  const [selectedFinishingTypes, setSelectedFinishingTypes] = useState<
+    string[]
+  >([]);
+
   const [searchCategory, setSearchCategory] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [priceRange, setPriceRange] = useState<number>(10000);
@@ -69,14 +75,21 @@ export default function ShopClient({
   const addItem = useCartStore((state) => state.addItem);
 
   let filteredProducts = initialProducts.filter((p) => {
-    if (selectedCategories.length > 0 && !selectedCategories.includes(p.category)) return false;
-    
+    if (
+      selectedCategories.length > 0 &&
+      !selectedCategories.includes(p.category)
+    )
+      return false;
+
     if (selectedFinishingTypes.length > 0) {
-      if (!p.finishingType || !selectedFinishingTypes.includes(p.finishingType)) {
+      if (
+        !p.finishingType ||
+        !selectedFinishingTypes.includes(p.finishingType)
+      ) {
         return false;
       }
     }
-    
+
     if (getFinalPrice(p) > priceRange) return false;
     return true;
   });
@@ -89,35 +102,47 @@ export default function ShopClient({
 
   const handleCategoryToggle = (category: string) => {
     setSelectedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category],
     );
   };
 
   const handleFinishingTypeToggle = (type: string) => {
     setSelectedFinishingTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
     );
   };
 
-  const WHATSAPP_NUMBER = "919971509003";
+  const WHATSAPP_NUMBER = "919313064631";
   const handleWhatsAppBuy = (e: React.MouseEvent, product: Product) => {
     e.preventDefault();
     e.stopPropagation();
-    const productId = product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
+    const productId =
+      product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`;
     const message = `Hi, I want to buy ${product.name} (Product ID: ${productId}, Price: ₹${getFinalPrice(product).toFixed(2)}). Is it available?`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
   };
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       <div className="hidden lg:flex p-5 border-b border-gray-100 justify-between items-center bg-white sticky top-0 z-10">
-        <h2 className="font-bold text-gray-900 tracking-wide uppercase text-sm">Filters</h2>
-        <span className="text-xs text-gray-500 font-medium">{filteredProducts.length} Items</span>
+        <h2 className="font-bold text-gray-900 tracking-wide uppercase text-sm">
+          Filters
+        </h2>
+        <span className="text-xs text-gray-500 font-medium">
+          {filteredProducts.length} Items
+        </span>
       </div>
 
       <div className="p-5 flex-1 overflow-y-auto custom-scrollbar space-y-4 pb-20 lg:pb-5">
         <div>
-          <h3 className="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">Category</h3>
+          <h3 className="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">
+            Category
+          </h3>
           <div className="relative mb-4">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
             <input
@@ -130,36 +155,54 @@ export default function ShopClient({
           </div>
           <div className="space-y-3 max-h-60 overflow-y-auto custom-scrollbar pr-2">
             {categories
-              .filter((c) => c.toLowerCase().includes(searchCategory.toLowerCase()))
+              .filter((c) =>
+                c.toLowerCase().includes(searchCategory.toLowerCase()),
+              )
               .map((cat, idx) => (
-                <label key={idx} className="flex items-center gap-3 cursor-pointer group">
+                <label
+                  key={idx}
+                  className="flex items-center gap-3 cursor-pointer group"
+                >
                   <input
                     type="checkbox"
                     checked={selectedCategories.includes(cat)}
                     onChange={() => handleCategoryToggle(cat)}
                     className="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37] cursor-pointer"
                   />
-                  <span className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">{cat}</span>
+                  <span className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">
+                    {cat}
+                  </span>
                 </label>
               ))}
-            {categories.filter((c) => c.toLowerCase().includes(searchCategory.toLowerCase())).length === 0 && (
-              <p className="text-sm text-gray-400 italic">No categories found.</p>
+            {categories.filter((c) =>
+              c.toLowerCase().includes(searchCategory.toLowerCase()),
+            ).length === 0 && (
+              <p className="text-sm text-gray-400 italic">
+                No categories found.
+              </p>
             )}
           </div>
         </div>
 
         <div className="border-t border-gray-100 pt-5">
-          <h3 className="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">Finishing Type</h3>
+          <h3 className="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">
+            Finishing Type
+          </h3>
           <div className="space-y-3">
             {["Wooden", "Metal"].map((type) => (
-              <label key={type} className="flex items-center gap-3 cursor-pointer group">
+              <label
+                key={type}
+                className="flex items-center gap-3 cursor-pointer group"
+              >
                 <input
                   type="checkbox"
                   checked={selectedFinishingTypes.includes(type)}
                   onChange={() => handleFinishingTypeToggle(type)}
                   className="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37] cursor-pointer"
                 />
-                <span className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">{type}</span>
+                <span className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">
+                  {type}
+                </span>
               </label>
             ))}
           </div>
@@ -167,8 +210,12 @@ export default function ShopClient({
 
         <div className="border-t border-gray-100 pt-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-gray-800 text-sm uppercase tracking-wider">Price Range</h3>
-            <span className="text-xs font-bold text-[#D4AF37]">₹0 - ₹{priceRange}</span>
+            <h3 className="font-bold text-gray-800 text-sm uppercase tracking-wider">
+              Price Range
+            </h3>
+            <span className="text-xs font-bold text-[#D4AF37]">
+              ₹0 - ₹{priceRange}
+            </span>
           </div>
           <input
             type="range"
@@ -182,7 +229,9 @@ export default function ShopClient({
         </div>
 
         <div className="border-t border-gray-100 pt-6 pb-4">
-          <h3 className="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">Availability</h3>
+          <h3 className="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">
+            Availability
+          </h3>
           <label className="flex items-center gap-3 cursor-pointer group">
             <input
               type="checkbox"
@@ -190,7 +239,9 @@ export default function ShopClient({
               onChange={() => setInStockOnly(!inStockOnly)}
               className="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37] cursor-pointer"
             />
-            <span className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">In Stock Only</span>
+            <span className="text-gray-600 text-sm group-hover:text-gray-900 transition-colors">
+              In Stock Only
+            </span>
           </label>
         </div>
       </div>
@@ -202,7 +253,6 @@ export default function ShopClient({
       <Header />
       <div className="bg-[#f9f9f9] min-h-screen pt-28 md:pt-32 pb-12 font-sans">
         <div className="container mx-auto px-4 lg:px-8 max-w-[1600px]">
-          
           <div className="lg:hidden w-full overflow-x-auto mb-4 pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <div className="flex items-center gap-2 w-max">
               <button
@@ -247,11 +297,12 @@ export default function ShopClient({
                 <option>Price (Low to High)</option>
                 <option>Price (High to Low)</option>
               </select>
-              <span>Sort</span> <ChevronDown className="w-4 h-4 text-[#D4AF37]" />
+              <span>Sort</span>{" "}
+              <ChevronDown className="w-4 h-4 text-[#D4AF37]" />
             </div>
-            
+
             <div className="h-4 w-px bg-gray-200"></div>
-            
+
             {/* 👇 FIX: Filters moved to the right */}
             <button
               onClick={() => setIsMobileFilterOpen(true)}
@@ -270,7 +321,9 @@ export default function ShopClient({
 
             <main className="flex-1">
               <div className="hidden lg:flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6">
-                <h1 className="text-xl font-bold text-gray-900 font-serif">Premium Collections</h1>
+                <h1 className="text-xl font-bold text-gray-900 font-serif">
+                  Premium Collections
+                </h1>
                 <div className="flex items-center gap-3 text-sm">
                   <span className="text-gray-500">Sort by:</span>
                   <select
@@ -289,11 +342,18 @@ export default function ShopClient({
               <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                 {filteredProducts.length === 0 ? (
                   <div className="col-span-full bg-white p-12 text-center rounded-xl shadow-sm border border-gray-100">
-                    <p className="text-gray-500 font-medium">No products found matching these filters.</p>
+                    <p className="text-gray-500 font-medium">
+                      No products found matching these filters.
+                    </p>
                   </div>
                 ) : (
                   filteredProducts.map((product, idx) => {
-                    const { hasDiscount, discountPercent, originalPrice, finalPrice } = getDiscountInfo(product.price, product.discountPercent);
+                    const {
+                      hasDiscount,
+                      discountPercent,
+                      originalPrice,
+                      finalPrice,
+                    } = getDiscountInfo(product.price, product.discountPercent);
 
                     return (
                       <motion.div
@@ -303,8 +363,10 @@ export default function ShopClient({
                         transition={{ duration: 0.4 }}
                         className="bg-[#F0F0F0] rounded-xl border border-gray-200 hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col h-full relative group p-3"
                       >
-                        <Link href={`/shop/product/${product.slug || product._id}`} className="flex-col flex flex-1">
-                          
+                        <Link
+                          href={`/shop/product/${product.slug || product._id}`}
+                          className="flex-col flex flex-1"
+                        >
                           <div className="relative aspect-square w-full flex items-center justify-center mb-3">
                             {hasDiscount && (
                               <span className="absolute top-0 left-0 bg-[#DB4444] text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded-sm z-10 shadow-sm">
@@ -327,7 +389,9 @@ export default function ShopClient({
                                 {product.category}
                               </span>
                               <span className="text-[9px] md:text-[13px] text-gray-900 font-semibold tracking-wider whitespace-nowrap">
-                                ID:{product.sku || `JR-${product._id.substring(0, 5).toUpperCase()}`}
+                                ID:
+                                {product.sku ||
+                                  `JR-${product._id.substring(0, 5).toUpperCase()}`}
                               </span>
                             </div>
 
@@ -339,12 +403,16 @@ export default function ShopClient({
                               <div className="flex items-end justify-between">
                                 <div className="flex flex-col gap-0.5">
                                   <div className="flex text-[#F5A623] text-[10px] md:text-[11px]">
-                                    {"★".repeat(Math.round(product.rating || 5))}
+                                    {"★".repeat(
+                                      Math.round(product.rating || 5),
+                                    )}
                                     <span className="text-gray-300">
-                                      {"★".repeat(5 - Math.round(product.rating || 5))}
+                                      {"★".repeat(
+                                        5 - Math.round(product.rating || 5),
+                                      )}
                                     </span>
                                   </div>
-                                  
+
                                   <div className="flex items-center gap-1.5 md:gap-2">
                                     <span className="font-extrabold text-gray-900 text-[15px] md:text-[16px]">
                                       ₹{finalPrice.toFixed(2)}
@@ -366,7 +434,10 @@ export default function ShopClient({
                                   className="w-8 h-8 rounded-full bg-[#1f3d2f] text-white flex items-center justify-center hover:bg-[#152920] hover:scale-105 transition-all shadow-sm z-10 relative"
                                   title="Add to Cart"
                                 >
-                                  <ShoppingBag className="w-4 h-4" strokeWidth={2} />
+                                  <ShoppingBag
+                                    className="w-4 h-4"
+                                    strokeWidth={2}
+                                  />
                                 </button>
                               </div>
 
@@ -374,7 +445,10 @@ export default function ShopClient({
                                 onClick={(e) => handleWhatsAppBuy(e, product)}
                                 className="w-full bg-[#25D366] text-white text-[11px] md:text-[12px] font-bold py-2 rounded-md flex items-center justify-center gap-1.5 hover:bg-[#1ebd5a] transition duration-200 shadow-sm z-10 relative tracking-wide uppercase"
                               >
-                                <MessageCircle className="w-4 h-4 fill-current" strokeWidth={2} />
+                                <MessageCircle
+                                  className="w-4 h-4 fill-current"
+                                  strokeWidth={2}
+                                />
                                 Buy on WhatsApp
                               </button>
                             </div>
@@ -408,22 +482,29 @@ export default function ShopClient({
               >
                 <div className="p-4 border-b border-gray-100 flex justify-between items-start">
                   <div>
-                    <h2 className="font-bold text-gray-900 uppercase tracking-widest">Filters</h2>
-                    <span className="text-xs text-gray-500 font-medium block mt-1">{filteredProducts.length} Items</span>
+                    <h2 className="font-bold text-gray-900 uppercase tracking-widest">
+                      Filters
+                    </h2>
+                    <span className="text-xs text-gray-500 font-medium block mt-1">
+                      {filteredProducts.length} Items
+                    </span>
                   </div>
-                  <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 bg-gray-50 rounded-full text-gray-500">
+                  <button
+                    onClick={() => setIsMobileFilterOpen(false)}
+                    className="p-2 bg-gray-50 rounded-full text-gray-500"
+                  >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-                
+
                 <div className="flex-1 overflow-hidden">{SidebarContent()}</div>
-                
+
                 {/* 👇 FIX: Added pb-8 so the buttons sit a little higher up on mobile */}
                 <div className="px-4 pt-4 pb-12 border-t border-gray-100 grid grid-cols-2 gap-3 bg-white z-20">
                   <button
                     onClick={() => {
                       setSelectedCategories([]);
-                      setSelectedFinishingTypes([]); 
+                      setSelectedFinishingTypes([]);
                       setPriceRange(10000);
                       setInStockOnly(false);
                       setSearchCategory("");
@@ -448,4 +529,3 @@ export default function ShopClient({
     </>
   );
 }
-
